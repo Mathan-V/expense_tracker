@@ -222,10 +222,11 @@ export const ExpenseForm = () => {
 
         <button
           type="submit"
-          className="w-full bg-teal-600 text-white py-2 rounded-md hover:bg-teal-700 transition duration-200 font-semibold"
+          className="w-full bg-teal-600 text-white py-2 rounded-md hover:bg-teal-700 transition-colors duration-200 font-semibold"
         >
           Save Expense
         </button>
+
       </form>
     </div>
   );

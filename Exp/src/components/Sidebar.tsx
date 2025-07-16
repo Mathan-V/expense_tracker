@@ -9,26 +9,44 @@ import {
   X,
 } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
+  const [currentUser, setCurrentUser] = useState('');
   const location = useLocation();
 
   const toggleCollapse = () => setCollapsed(!collapsed);
   const toggleMobile = () => setMobileOpen(!mobileOpen);
+  const toggleUserDropdown = () => setUserDropdownOpen(!userDropdownOpen);
 
-  // Close sidebar on link click (only for mobile)
   const handleMobileNav = () => {
-    if (window.innerWidth < 768) {
-      setMobileOpen(false);
-    }
+    if (window.innerWidth < 768) setMobileOpen(false);
   };
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get(
+          'http://localhost:8000/api/method/frappe.auth.get_logged_user',
+          { withCredentials: true }
+        );
+        setCurrentUser(res.data.message);
+      } catch (err) {
+        console.error('Failed to fetch user', err);
+        setCurrentUser('Guest');
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   return (
     <>
-      {/* Mobile menu button */}
+      {/* Mobile menu toggle */}
       <button
         onClick={toggleMobile}
         className="md:hidden fixed top-4 left-4 z-50 bg-white border p-2 rounded-md shadow"
@@ -36,7 +54,7 @@ const Sidebar = () => {
         {mobileOpen ? <X size={20} /> : <Menu size={20} />}
       </button>
 
-      {/* Backdrop */}
+      {/* Mobile backdrop */}
       {mobileOpen && (
         <div
           className="fixed inset-0 bg-black opacity-30 z-40"
@@ -44,33 +62,47 @@ const Sidebar = () => {
         />
       )}
 
-      {/* Sidebar */}
+      {/* Sidebar container */}
       <div
         className={`fixed md:static top-0 left-0 z-50 h-full bg-white shadow-sm transition-all duration-300 flex flex-col justify-between
         ${mobileOpen ? 'w-64' : collapsed ? 'w-20' : 'w-64'} 
         ${mobileOpen ? 'block' : 'hidden md:flex'}
         `}
       >
-        {/* Top Section */}
+        {/* Top */}
         <div>
-          <div className="p-4 border-b">
+          <div className="p-4 border-b relative">
             {!collapsed && (
               <>
                 <h1 className="text-xl font-bold text-blue-600">Expense Tracker</h1>
                 <p className="text-sm text-gray-500">Track Exp</p>
               </>
             )}
-            <SidebarLink
-              icon={<Users size={18} />}
-              label="Administrator"
-              to="/user"
-              active={location.pathname === '/user'}
-              collapsed={collapsed}
-              onClick={handleMobileNav}
-            />
+
+            {/* User Dropdown */}
+            <div className="mt-3 relative">
+              <button
+                onClick={toggleUserDropdown}
+                className="flex items-center gap-2 text-sm font-medium text-gray-700 hover:text-black"
+              >
+                <Users size={18} />
+                {!collapsed && <span>{currentUser || 'Loading...'}</span>}
+              </button>
+
+              {userDropdownOpen && !collapsed && (
+                <div className="absolute left-0 mt-2 w-40 bg-white border rounded shadow z-50">
+                  <button
+                    className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm"
+                    onClick={() => (window.location.href = 'http://localhost:8000/app')}
+                  >
+                    Switch to Desk
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
-          {/* Menu Items */}
+          {/* Menu Links */}
           <nav className="mt-4 px-2 space-y-1">
             <SidebarLink
               icon={<Home size={18} />}
@@ -99,7 +131,7 @@ const Sidebar = () => {
           </nav>
         </div>
 
-        {/* Bottom Section */}
+        {/* Bottom */}
         <div className="p-4 border-t space-y-1 text-sm">
           <SidebarLink
             icon={<HelpCircle size={18} />}

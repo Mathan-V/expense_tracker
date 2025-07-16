@@ -11,15 +11,15 @@ app_license = "mit"
 # required_apps = []
 
 # Each item in the list will be shown as an app in the apps page
-# add_to_apps_screen = [
-# 	{
-# 		"name": "expense_tracker",
-# 		"logo": "/assets/expense_tracker/logo.png",
-# 		"title": "Expense Tracker",
-# 		"route": "/expense_tracker",
-# 		"has_permission": "expense_tracker.api.permission.has_app_permission"
-# 	}
-# ]
+add_to_apps_screen = [
+	{
+		"name": "expense_tracker",
+		"logo": "/assets/expense_tracker/exp_1.png",
+		"title": "Expense Tracker",
+		"route": "/Exp",
+		# "has_permission": "expense_tracker.api.permission.has_app_permission"
+	}
+]
 
 # Includes in <head>
 # ------------------
@@ -243,4 +243,4 @@ app_license = "mit"
 # }
 
 
-website_route_rules = [{'from_route': '/Exp/<path:app_path>', 'to_route': 'Exp'}, {'from_route': '/Expense/<path:app_path>', 'to_route': 'Expense'},]
+website_route_rules = [{'from_route': '/Exp/<path:app_path>', 'to_route': 'Exp'}, {'from_route': '/exp/<path:app_path>', 'to_route': 'exp'}, {'from_route': '/Exp/<path:app_path>', 'to_route': 'Exp'}, {'from_route': '/Expense/<path:app_path>', 'to_route': 'Expense'},]

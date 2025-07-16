@@ -1,6 +1,6 @@
-import { RouterProvider } from 'react-router-dom'
-import { FrappeProvider } from 'frappe-react-sdk'
-import router from './routes'
+import { RouterProvider } from 'react-router-dom';
+import { FrappeProvider } from 'frappe-react-sdk';
+import router from './routes';
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
     >
       <RouterProvider router={router} />
     </FrappeProvider>
-  )
+  );
 }
 
-export default App
+export default App;

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import CustomAreaChart from '../components/CustomAreaChart';
 import CustomPieChart from '../components/CustomPieChart';
-import axios from 'axios';
 
 const Home = () => {
   const [income, setIncome] = useState(0);
@@ -11,7 +11,7 @@ const Home = () => {
   useEffect(() => {
     const fetchSummary = async () => {
       try {
-        const response = await axios.get('/api/resource/Expense', {
+        const res = await axios.get('http://localhost:8000/api/resource/Expense', {
           params: {
             fields: JSON.stringify(['type', 'amount']),
             limit_page_length: 1000,
@@ -19,23 +19,20 @@ const Home = () => {
           withCredentials: true,
         });
 
-        const entries = response.data.data || [];
+        const entries = res.data.data || [];
+        console.log('Entries:', entries);
 
-        let totalIncome = 0;
-        let totalExpense = 0;
+        let income = 0, expense = 0;
+        for (const entry of entries) {
+          const amt = Number(entry.amount) || 0;
+          if (entry.type === 'Income') income += amt;
+          else if (entry.type === 'Expense') expense += amt;
+        }
 
-        entries.forEach(entry => {
-          if (entry.type === 'Income') {
-            totalIncome += entry.amount;
-          } else if (entry.type === 'Expense') {
-            totalExpense += entry.amount;
-          }
-        });
-
-        setIncome(totalIncome);
-        setExpense(totalExpense);
-      } catch (error) {
-        console.error('Failed to load summary data:', error);
+        setIncome(income);
+        setExpense(expense);
+      } catch (err) {
+        console.error('API Error:', err);
       } finally {
         setLoading(false);
       }
@@ -48,35 +45,43 @@ const Home = () => {
 
   return (
     <div className="min-h-screen p-4 sm:p-6 space-y-6">
-      <h1 className="text-xl sm:text-2xl font-bold mb-4 text-gray-800">Dashboard</h1>
+      <h1 className="text-2xl font-bold text-gray-800 mb-4">Dashboard</h1>
 
-      {/* Stats Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-        <div className="bg-green-400 w-full p-4 sm:p-6 text-white font-semibold rounded-lg shadow">
-          <h3 className="text-base sm:text-lg">Income Amount</h3>
-          <h4 className="text-xl sm:text-2xl">{loading ? 'Loading...' : `₹${income.toLocaleString()}`}</h4>
-        </div>
-        <div className="bg-red-300 w-full p-4 sm:p-6 text-white font-semibold rounded-lg shadow">
-          <h3 className="text-base sm:text-lg">Expense Amount</h3>
-          <h4 className="text-xl sm:text-2xl">{loading ? 'Loading...' : `₹${expense.toLocaleString()}`}</h4>
-        </div>
-        <div className="bg-green-300 w-full p-4 sm:p-6 text-white font-semibold rounded-lg shadow">
-          <h3 className="text-base sm:text-lg">Balance Amount</h3>
-          <h4 className="text-xl sm:text-2xl">{loading ? 'Loading...' : `₹${balance.toLocaleString()}`}</h4>
-        </div>
+        <StatCard title="Income" value={income} loading={loading} color="bg-green-500" />
+        <StatCard title="Expense" value={expense} loading={loading} color="bg-red-500" />
+        <StatCard title="Balance" value={balance} loading={loading} color="bg-blue-500" />
       </div>
 
-      {/* Charts Section */}
       <div className="flex flex-col md:flex-row gap-4">
-        <div className="bg-gray-100 p-4 sm:p-6 w-full md:w-1/2 rounded-lg shadow">
+        <div className="bg-white p-6 rounded-lg shadow w-full md:w-1/2">
           <CustomAreaChart />
         </div>
-        <div className="bg-gray-100 p-4 sm:p-6 w-full md:w-1/2 rounded-lg shadow">
+        <div className="bg-white p-6 rounded-lg shadow w-full md:w-1/2">
           <CustomPieChart />
         </div>
       </div>
     </div>
   );
 };
+
+const StatCard = ({
+  title,
+  value,
+  loading,
+  color,
+}: {
+  title: string;
+  value: number;
+  loading: boolean;
+  color: string;
+}) => (
+  <div className={`${color} text-white p-6 rounded-lg shadow`}>
+    <h3 className="text-lg">{title}</h3>
+    <p className="text-2xl">
+      {loading ? 'Loading...' : `₹${value.toLocaleString('en-IN')}`}
+    </p>
+  </div>
+);
 
 export default Home;

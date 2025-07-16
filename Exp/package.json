@@ -11,32 +11,30 @@
     "copy-html-entry": "cp ../expense_tracker/public/Exp/index.html ../expense_tracker/www/Exp.html"
   },
   "dependencies": {
-    "@mui/x-charts": "^8.6.0",
+    "@tailwindcss/postcss": "^4.1.11",
     "@tailwindcss/vite": "^4.1.11",
-    "date-fns": "^4.1.0",
     "dayjs": "^1.11.13",
-    "frappe-react-sdk": "^1.11.0",
-    "lucide-react": "^0.524.0",
+    "frappe-react-sdk": "^1.12.0",
+    "lucide-react": "^0.525.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router-dom": "^7.6.2",
-    "recharts": "^3.0.2"
+    "react-is": "^19.1.0",
+    "recharts": "^3.1.0"
   },
   "devDependencies": {
-    "@eslint/js": "^9.29.0",
-    "@types/node": "^24.0.4",
+    "@eslint/js": "^9.30.1",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
-    "@vitejs/plugin-react": "^4.5.2",
+    "@vitejs/plugin-react": "^4.6.0",
     "autoprefixer": "^10.4.21",
-    "eslint": "^9.29.0",
+    "eslint": "^9.30.1",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
-    "globals": "^16.2.0",
+    "globals": "^16.3.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^4.1.11",
     "typescript": "~5.8.3",
-    "typescript-eslint": "^8.34.1",
-    "vite": "^7.0.0"
+    "typescript-eslint": "^8.35.1",
+    "vite": "^7.0.4"
   }
 }

@@ -29,7 +29,7 @@ const CustomAreaChart: React.FC = () => {
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const response = await axios.get('/api/resource/Expense', {
+        const response = await axios.get('http://localhost:8000/api/resource/Expense',{
           params: {
             fields: JSON.stringify(['date', 'amount', 'type']),
             limit_page_length: 1000,

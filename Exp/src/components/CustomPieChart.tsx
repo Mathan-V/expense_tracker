@@ -19,7 +19,7 @@ const CustomPieChart: React.FC = () => {
   useEffect(() => {
     const fetchExpenses = async () => {
       try {
-        const response = await axios.get('/api/resource/Expense', {
+        const response = await axios.get('http://localhost:8000/api/resource/Expense', {
           params: {
             fields: JSON.stringify(['category', 'amount', 'type']), // ✅ include type
             limit_page_length: 1000,
