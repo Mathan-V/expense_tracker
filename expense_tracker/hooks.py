@@ -243,4 +243,4 @@ add_to_apps_screen = [
 # }
 
 
-website_route_rules = [{'from_route': '/Exp/<path:app_path>', 'to_route': 'Exp'}, {'from_route': '/exp/<path:app_path>', 'to_route': 'exp'}, {'from_route': '/Exp/<path:app_path>', 'to_route': 'Exp'}, {'from_route': '/Expense/<path:app_path>', 'to_route': 'Expense'},]
+website_route_rules = [{'from_route': '/Exp/<path:app_path>', 'to_route': 'Exp'}, {'from_route': '/Exp/<path:app_path>', 'to_route': 'Exp'}, {'from_route': '/exp/<path:app_path>', 'to_route': 'exp'}, {'from_route': '/Exp/<path:app_path>', 'to_route': 'Exp'}, {'from_route': '/Expense/<path:app_path>', 'to_route': 'Expense'},]

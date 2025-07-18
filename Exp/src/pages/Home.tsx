@@ -11,7 +11,7 @@ const Home = () => {
   useEffect(() => {
     const fetchSummary = async () => {
       try {
-        const res = await axios.get('http://localhost:8000/api/resource/Expense', {
+        const res = await axios.get(window.origin + '/api/resource/Expense', {
           params: {
             fields: JSON.stringify(['type', 'amount']),
             limit_page_length: 1000,

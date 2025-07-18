@@ -5,7 +5,7 @@ import router from './routes';
 function App() {
   return (
     <FrappeProvider
-      url="http://localhost:8000"
+      url={window.origin}  // ✅ Correct JSX
       enableSocket={true}
       socketPort={9000}
     >

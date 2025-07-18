@@ -31,7 +31,7 @@ const Sidebar = () => {
     const fetchUser = async () => {
       try {
         const res = await axios.get(
-          'http://localhost:8000/api/method/frappe.auth.get_logged_user',
+          window.origin + '/api/method/frappe.auth.get_logged_user',
           { withCredentials: true }
         );
         setCurrentUser(res.data.message);
@@ -93,7 +93,7 @@ const Sidebar = () => {
                 <div className="absolute left-0 mt-2 w-40 bg-white border rounded shadow z-50">
                   <button
                     className="w-full px-4 py-2 text-left hover:bg-gray-100 text-sm"
-                    onClick={() => (window.location.href = 'http://localhost:8000/app')}
+                    onClick={() => (window.location.href = window.origin + '/app')}
                   >
                     Switch to Desk
                   </button>
