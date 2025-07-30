@@ -16,7 +16,7 @@ const router = createBrowserRouter([
       { path: 'add', element: <AddExpense /> },
       { path: 'list', element: <ExpenseList /> },
       { path: 'settings', element: <SettingsPage /> },
-      { path: '*', element: <NotFound /> }
+      { path: '*', element: <Home /> }
     ]
   }
 ]);
